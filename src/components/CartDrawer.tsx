@@ -2,7 +2,7 @@
 
 import { motion, AnimatePresence } from 'framer-motion';
 import { useCart } from '../context/CartContext';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 {/* 
   ACKNOWLEDGEMENT: Modal inspired from 
@@ -62,8 +62,17 @@ const CartItem: React.FC<CartItemProps> = ({ item, onRemove, onUpdateQuantity })
 };
 
 export default function CartDrawer() {
-  const { items, isOpen, closeCart, removeItem, updateQuantity, checkout, isLoading } = useCart();
+  const { items, isOpen, closeCart, openCart, removeItem, updateQuantity, checkout, isLoading } = useCart();
   const [checkoutStatus, setCheckoutStatus] = useState<string | null>(null);
+
+  // Listen for open-cart event from notifications
+  useEffect(() => {
+    const handleOpenCart = () => {
+      openCart();
+    };
+    window.addEventListener('open-cart', handleOpenCart);
+    return () => window.removeEventListener('open-cart', handleOpenCart);
+  }, [openCart]);
   
   // Calculate cart total
   const total = items.reduce((sum, item) => sum + item.price * item.quantity, 0);

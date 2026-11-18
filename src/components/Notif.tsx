@@ -123,10 +123,13 @@ const Notif: React.FC<NotifProps> = ({
                                         setShowModal(false);
                                         if (onClose) onClose();
                                     }, 300);
+                                    // Open cart on click
+                                    const event = new CustomEvent('open-cart');
+                                    window.dispatchEvent(event);
                                 }}
                                 className="text-xs py-1 px-2"
                             >
-                                Dismiss
+                                Open Cart
                             </NotifButton>
                         </div>
                     </div>
