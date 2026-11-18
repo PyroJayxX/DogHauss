@@ -47,11 +47,11 @@ RUN groupadd -r django && useradd -r -g django django
 # Set working directory
 WORKDIR /app
 
-# Copy project files (as root, so we can run collectstatic)
-COPY . .
+# Copy project files
+COPY --chown=django:django . .
 
-# Run collectstatic as root (creates /app/staticfiles with correct permissions)
-RUN python manage.py collectstatic --noinput
+# Ensure staticfiles dir exists and is writable by django user
+RUN mkdir -p /app/staticfiles && chown -R django:django /app/staticfiles
 
 # Switch to non-root user
 USER django
@@ -63,5 +63,5 @@ EXPOSE ${PORT:-8000}
 HEALTHCHECK --interval=30s --timeout=10s --start-period=40s --retries=3 \
     CMD python -c "import urllib.request, os; port = os.environ.get('PORT', '8000'); urllib.request.urlopen(f'http://localhost:{port}/orders/products/')" || exit 1
 
-# Run application (PORT is injected by Render)
-CMD gunicorn bilandog.wsgi:application --bind 0.0.0.0:${PORT:-8000} --workers 3 --timeout 120
+# Run application: collectstatic at startup (has env vars), then gunicorn
+CMD python manage.py collectstatic --noinput && gunicorn bilandog.wsgi:application --bind 0.0.0.0:${PORT:-8000} --workers 3 --timeout 120
