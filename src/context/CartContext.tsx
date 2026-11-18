@@ -134,6 +134,7 @@ export function CartProvider({ children }: { children: ReactNode }) {
 
   // Memoized queueSyncToServer
   const queueSyncToServer = useCallback(() => {
+    if (!isLoggedIn) return; // sync to server if logged in
     if (syncTimeoutRef.current) {
       clearTimeout(syncTimeoutRef.current);
     }
@@ -142,14 +143,12 @@ export function CartProvider({ children }: { children: ReactNode }) {
       syncCartWithServer();
       syncTimeoutRef.current = null;
     }, 500);
-  }, [syncCartWithServer]);
+  }, [syncCartWithServer, isLoggedIn]);
 
   // Load cart from backend when user logs in
   useEffect(() => {
     if (isLoggedIn) {
       fetchCartFromServer();
-    } else {
-      setItems([]);
     }
   }, [isLoggedIn, fetchCartFromServer]);
 
@@ -171,15 +170,6 @@ export function CartProvider({ children }: { children: ReactNode }) {
   const closeCart = () => setIsOpen(false);
 
   const addItem = (item: CartItemType) => {
-    if (!isLoggedIn) {
-      showNotification(
-        "error",
-        "Login Required",
-        "Please log in to add items to your cart"
-      );
-      return;
-    }
-
     setItems(currentItems => {
       const existingItem = currentItems.find(i => i.id === item.id);
 
