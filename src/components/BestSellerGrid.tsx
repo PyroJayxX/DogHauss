@@ -10,6 +10,8 @@ type Product = {
   price: number;
 };
 
+const API_BASE = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000';
+
 const BestSellerGrid = () => {
   const [products, setProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState(true);
@@ -18,7 +20,7 @@ const BestSellerGrid = () => {
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const response = await fetch('http://localhost:8000/orders/products/');
+        const response = await fetch(`${API_BASE}/orders/products/`);
         if (!response.ok) {
           throw new Error('Failed to fetch products');
         }

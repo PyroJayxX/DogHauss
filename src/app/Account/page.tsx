@@ -7,6 +7,8 @@ import { useAuth } from '../../context/AuthContext';
 import { useRouter } from 'next/navigation';
 import Notif from '../../components/Notif';
 
+const API_BASE = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000';
+
 export default function AccountSettings() {
   const [loading, setLoading] = useState(true);
   const [checkingAuth, setCheckingAuth] = useState(true);
@@ -79,8 +81,8 @@ export default function AccountSettings() {
         if (!token) {
           throw new Error('No authentication token found');
         }
-        
-        const response = await fetch('http://localhost:8000/users/profile/', {
+
+        const response = await fetch(`${API_BASE}/users/profile/`, {
           headers: {
             'Authorization': `Bearer ${token}`,
             'Content-Type': 'application/json'
@@ -172,7 +174,7 @@ export default function AccountSettings() {
         updateData.new_password = formData.new_password;
       }
       
-      const response = await fetch('http://localhost:8000/users/profile/', {
+      const response = await fetch(`${API_BASE}/users/profile/`, {
         method: 'PUT',
         headers: {
           'Authorization': `Bearer ${token}`,

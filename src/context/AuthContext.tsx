@@ -14,16 +14,16 @@ const AuthContext = createContext<AuthContextType | undefined>(undefined);
 // const refreshToken = async (logout: () => Promise<void>) => {
 //   const refresh = localStorage.getItem('refreshToken');
 //   if (!refresh) return false;
-  
+
 //   try {
-//     const response = await fetch('http://localhost:8000/users/token/refresh/', {
+//     const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000'}/users/token/refresh/`, {
 //       method: 'POST',
 //       headers: {
 //         'Content-Type': 'application/json',
 //       },
 //       body: JSON.stringify({ refresh }),
 //     });
-    
+
 //     if (response.ok) {
 //       const data = await response.json();
 //       localStorage.setItem('accessToken', data.access);
@@ -37,6 +37,8 @@ const AuthContext = createContext<AuthContextType | undefined>(undefined);
 //     return false;
 //   }
 // };
+
+const API_BASE = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000';
 
 export function AuthProvider({ children }: { children: ReactNode }) {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -53,7 +55,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const login = (accessToken: string, refreshToken: string) => {
     localStorage.setItem('accessToken', accessToken);
     localStorage.setItem('refreshToken', refreshToken);
-    setIsLoggedIn(true);  
+    setIsLoggedIn(true);
   };
 
   // Update getToken to retrieve the access token
@@ -65,7 +67,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     try {
       const token = localStorage.getItem('accessToken');
       if (token) {
-        await fetch("http://localhost:8000/users/logout/", {
+        await fetch(`${API_BASE}/users/logout/`, {
           method: "POST",
           headers: {
             "Authorization": `Bearer ${token}`,

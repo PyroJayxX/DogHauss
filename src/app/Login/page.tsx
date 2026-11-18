@@ -6,6 +6,8 @@ import { useState } from "react";
 import { useAuth } from "../../context/AuthContext";
 import Notif from "../../components/Notif";
 
+const API_BASE = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000';
+
 export default function Login() {
     const [formType, setFormType] = useState<"login" | "signup">("login");
     const { login } = useAuth();
@@ -43,7 +45,7 @@ export default function Login() {
         const data = Object.fromEntries(formData.entries());
 
         try {
-            const res = await fetch("http://localhost:8000/users/login/", {
+            const res = await fetch(`${API_BASE}/users/login/`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
@@ -91,9 +93,9 @@ export default function Login() {
         e.preventDefault();
         const formData = new FormData(e.currentTarget);
         const data = Object.fromEntries(formData.entries());
-        
+
         try {
-            const res = await fetch("http://localhost:8000/users/register/", {
+            const res = await fetch(`${API_BASE}/users/register/`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",

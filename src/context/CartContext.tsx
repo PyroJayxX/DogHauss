@@ -3,6 +3,7 @@
 import { createContext, useContext, useState, useEffect, useRef, useCallback, ReactNode } from 'react';
 import { useAuth } from './AuthContext';
 import Notif from '../components/Notif';
+import { apiFetchWithAuth } from '@/lib/api';
 
 interface CartItemType {
   id: number;
@@ -82,12 +83,7 @@ export function CartProvider({ children }: { children: ReactNode }) {
 
       console.log("Fetching cart with token:", token.substring(0, 10) + "...");
 
-      const response = await fetch('http://localhost:8000/orders/cart/', {
-        headers: {
-          'Authorization': `Bearer ${token}`,
-          'Content-Type': 'application/json'
-        }
-      });
+      const response = await apiFetchWithAuth('/orders/cart/', token);
 
       if (response.ok) {
         const data = await response.json();
@@ -118,12 +114,8 @@ export function CartProvider({ children }: { children: ReactNode }) {
 
       console.log("Sending request with token:", token.substring(0, 10) + "...");
 
-      const response = await fetch('http://localhost:8000/orders/cart/', {
+      const response = await apiFetchWithAuth('/orders/cart/', token, {
         method: 'POST',
-        headers: {
-          'Authorization': `Bearer ${token}`,
-          'Content-Type': 'application/json'
-        },
         body: JSON.stringify({ cart_items: items })
       });
 
@@ -265,13 +257,13 @@ export function CartProvider({ children }: { children: ReactNode }) {
     try {
       setIsLoading(true);
       const token = getToken();
+      if (!token) {
+        showNotification("error", "Checkout Failed", "Please log in to checkout");
+        return { success: false, message: "Please log in to checkout" };
+      }
 
-      const response = await fetch('http://localhost:8000/orders/checkout/', {
-        method: 'POST',
-        headers: {
-          'Authorization': `Bearer ${token}`,
-          'Content-Type': 'application/json'
-        }
+      const response = await apiFetchWithAuth('/orders/checkout/', token, {
+        method: 'POST'
       });
 
       const data = await response.json();

@@ -6,6 +6,8 @@ import Footer from '../../components/Footer';
 import { useAuth } from '../../context/AuthContext';
 import { useRouter } from 'next/navigation';
 
+const API_BASE = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000';
+
 interface OrderItemType {
   id: number;
   product_name: string;
@@ -65,8 +67,8 @@ export default function PurchaseHistory() {
       try {
         const token = getToken();
         if (!token) throw new Error('No authentication token found');
-        
-        const response = await fetch('http://localhost:8000/orders/history/', {
+
+        const response = await fetch(`${API_BASE}/orders/history/`, {
           headers: {
             'Authorization': `Bearer ${token}`,
             'Content-Type': 'application/json'
