@@ -50,12 +50,24 @@ const Card: React.FC<CardProps> = ({ id, image, name, price, emoji = '🌭' }) =
         <p className="col-span-1 row-span-1 md:truncate text-white" title={name}>{name}</p>
         <button
           onClick={handleAddToCart}
-          className={`col-span-1 row-span-2 ml-auto ${
-            addError ? 'bg-red-500' : isAdding ? 'bg-green-500' : 'bg-[#EE9B70]'
-          } text-[#481814] text-xl text-center rounded-xl w-12 h-12 flex items-center justify-center transition-colors`}
+          className={`col-span-1 row-span-2 ml-auto flex items-center justify-center transition-colors ${
+            addError ? 'bg-red-500' : isAdding ? 'bg-green-500' : 'bg-[#EE9B70] hover:bg-[#EE9B70]/80'
+          } text-[#481814] rounded-full w-12 h-12`}
           aria-label="Add to cart"
         >
-          {addError ? '✕' : isAdding ? '✓' : '+'}
+          {addError ? (
+            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+            </svg>
+          ) : isAdding ? (
+            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+            </svg>
+          ) : (
+            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
+            </svg>
+          )}
         </button>
         <p className="col-span-1 row-span-1 text-white">₱{price}</p>
       </div>

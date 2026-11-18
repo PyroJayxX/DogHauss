@@ -32,20 +32,26 @@ const CartItem: React.FC<CartItemProps> = ({ item, onRemove, onUpdateQuantity })
         <h3 className="font-semibold">{item.name}</h3>
         <p className="text-sm text-gray-300">₱{item.price.toFixed(2)} x {item.quantity}</p>
       </div>
-      <div className="flex items-center">
-        <button 
-          className="px-2 py-1 bg-[#481401] text-white rounded-l-md"
+      <div className="flex items-center gap-1">
+        <button
+          className="w-8 h-8 flex items-center justify-center bg-transparent hover:bg-white/10 text-white rounded-full transition-colors disabled:opacity-30 disabled:cursor-not-allowed"
           onClick={() => onUpdateQuantity(item.id, item.quantity - 1)}
           disabled={item.quantity <= 1}
+          aria-label="Decrease quantity"
         >
-          -
+          <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M20 12H4" />
+          </svg>
         </button>
-        <span className="px-3 py-1 bg-[#2D0C01] text-white">{item.quantity}</span>
-        <button 
-          className="px-2 py-1 bg-[#481401] text-white rounded-r-md"
+        <span className="w-10 text-center text-white font-medium">{item.quantity}</span>
+        <button
+          className="w-8 h-8 flex items-center justify-center bg-transparent hover:bg-white/10 text-white rounded-full transition-colors"
           onClick={() => onUpdateQuantity(item.id, item.quantity + 1)}
+          aria-label="Increase quantity"
         >
-          +
+          <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
+          </svg>
         </button>
       </div>
       <button 
