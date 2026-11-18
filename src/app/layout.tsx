@@ -17,8 +17,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Bilandog",
-  description: "By Bilandog Corporation",
+  title: "DogHauss",
+  description: "Premium dog products and accessories",
 };
 
 export default function RootLayout({

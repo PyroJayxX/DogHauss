@@ -30,12 +30,12 @@ export const Footer = () => {
                 <Image src="/icons/icon_ig.svg" alt="Instagram" width={35} height={35} />
                 <Image src="/icons/icon_tiktok.svg" alt="Instagram" width={30} height={30} />
             </div>
-            <h1>@Bilandog_Corp</h1>
+            <h1>@DogHauss</h1>
             </div>
         </div>
 
         <footer className="w-full h-20 bg-[#F05A19] flex justify-center items-center">
-            <p className="text-white text-sm font-times">Copyright © 2021 Bilandog Corp. All Rights Reserved.</p>
+            <p className="text-white text-sm font-times">Copyright © 2025 DogHauss. All Rights Reserved.</p>
         </footer>
     </>
   );
