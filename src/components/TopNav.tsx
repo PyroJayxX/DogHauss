@@ -22,7 +22,7 @@ export const Topnav: React.FC = () => {
         style={{position: 'absolute', top: 0, zIndex: 10, background: 'linear-gradient(to bottom, black, transparent)', userSelect: 'none' }}
         >
             {/* Left side: Logo + Nav Links */}
-            <div className="flex items-center space-x-6 md:space-x-10 lg:space-x-12">
+            <div className="flex pl-10 items-center space-x-6 md:space-x-10 lg:space-x-12">
                 <Link href="/" className="flex items-center" title="Home">
                   <Image
                     src="/icons/logo.png"
@@ -41,7 +41,7 @@ export const Topnav: React.FC = () => {
             </div>
 
             {/* Right side: Login/Account (left of cart) + Cart (rightmost) */}
-            <div className="flex items-center space-x-4 md:space-x-6">
+            <div className="pr-10 flex items-center space-x-4 md:space-x-6">
                 {/* Login / Account - positioned left of cart */}
                 {isLoggedIn ? (
                     <div className="relative group">
