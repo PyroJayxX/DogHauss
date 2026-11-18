@@ -136,13 +136,24 @@ WSGI_APPLICATION = 'bilandog.wsgi.application'
 
 import dj_database_url
 
-DATABASES = {
-    'default': dj_database_url.config(
-        default=os.environ.get('DATABASE_URL', 'postgresql://postgres:123@localhost:5432/bilandog_db'),
-        conn_max_age=600,
-        conn_health_checks=True,
-    )
-}
+# Use SQLite for local dev if no DATABASE_URL is set; production uses PostgreSQL via DATABASE_URL env var
+database_url = os.environ.get('DATABASE_URL')
+if database_url:
+    DATABASES = {
+        'default': dj_database_url.config(
+            default=database_url,
+            conn_max_age=600,
+            conn_health_checks=True,
+        )
+    }
+else:
+    # Local development fallback
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': BASE_DIR / 'db.sqlite3',
+        }
+    }
 
 
 # Password validation
