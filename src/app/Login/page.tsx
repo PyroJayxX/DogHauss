@@ -148,9 +148,9 @@ export default function Login() {
 
     return (
         <div className="w-full h-full overflow-x-hidden flex flex-col bg-[#171717]">
-            <div className="h-12"><TopNav /></div> 
+            <div className="h-12"><TopNav /></div>
             <div className="w-full min-h-screen flex items-center justify-center">
-                <div className="bg-[#1e1e1e] p-14 shadow-lg w-full md:w-2/3 lg:w-1/3 m-8 md:m-28">
+                <div className="bg-[#1e1e1e] p-10 shadow-lg w-full max-w-xs md:max-w-sm lg:max-w-md m-8">
                     <div id="form-container" className="transition-all">
                         {/* Login Form */}
                         {formType === "login" ? (
