@@ -53,12 +53,12 @@ COPY --chown=django:django . .
 # Switch to non-root user
 USER django
 
-# Expose port
-EXPOSE 8000
+# Expose port (Render sets PORT at runtime, typically 10000)
+EXPOSE ${PORT:-8000}
 
 # Health check
 HEALTHCHECK --interval=30s --timeout=10s --start-period=40s --retries=3 \
-    CMD python -c "import urllib.request; urllib.request.urlopen('http://localhost:8000/orders/products/')" || exit 1
+    CMD python -c "import urllib.request, os; port = os.environ.get('PORT', '8000'); urllib.request.urlopen(f'http://localhost:{port}/orders/products/')" || exit 1
 
-# Run application
-CMD ["gunicorn", "bilandog.wsgi:application", "--bind", "0.0.0.0:8000", "--workers", "3", "--timeout", "120"]
+# Run application (PORT is injected by Render)
+CMD gunicorn bilandog.wsgi:application --bind 0.0.0.0:${PORT:-8000} --workers 3 --timeout 120
