@@ -1,10 +1,10 @@
-# Render Infrastructure as Code for Bilandog Backend
+# Render Infrastructure as Code for Doghaus Backend
 # Deploy with: render deploy --config render.yaml
 
 services:
   # Backend Web Service
   - type: web
-    name: bilandog-backend
+    name: doghaus-backend
     runtime: docker
     dockerfilePath: ./backend/Dockerfile
     dockerContext: ./backend
@@ -12,15 +12,17 @@ services:
     region: oregon
     autoDeploy: true
     branch: main
+    buildCommand: "python manage.py collectstatic --noinput && python manage.py migrate --noinput"
+    startCommand: "gunicorn bilandog.wsgi:application --bind 0.0.0.0:$PORT --workers 3 --timeout 120"
     envVars:
       - key: DJANGO_SETTINGS_MODULE
         value: bilandog.settings.production
       - key: DEBUG
         value: "False"
       - key: ALLOWED_HOSTS
-        value: ".onrender.com,bilandog-ecommerce-v2.vercel.app"
+        value: ".onrender.com,doghauss.vercel.app"
       - key: CORS_ALLOWED_ORIGINS
-        value: "https://bilandog-ecommerce-v2.vercel.app"
+        value: "https://doghauss.vercel.app"
       # SECRET_KEY and DATABASE_URL must be set manually in Render dashboard
       # SECRET_KEY: Generate a new 50+ character key
       # DATABASE_URL: Get from Neon dashboard (pooled connection with sslmode=require)

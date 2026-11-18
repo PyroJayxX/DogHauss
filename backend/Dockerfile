@@ -50,9 +50,6 @@ WORKDIR /app
 # Copy project files
 COPY --chown=django:django . .
 
-# Collect static files
-RUN python manage.py collectstatic --noinput --settings=bilandog.settings.production
-
 # Switch to non-root user
 USER django
 
