@@ -1,8 +1,10 @@
-# Bilandog-Ecommerce-V2
+# doghauss
 
 Remastered version of Bilandog website I made from 2021.
 
-- Backend server is not yet deployed to the cloud so only localhost works for now.
+- Frontend deployed on Vercel: https://doghauss.vercel.app/
+- Backend deployed on Render (free tier) 
+- Database hosted on Neon PostgreSQL
 
 Created for the purpose of practicing Django Stack:
 
