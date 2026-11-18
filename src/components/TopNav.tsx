@@ -21,7 +21,7 @@ export const Topnav: React.FC = () => {
         className="w-full text-white p-4 md:p-8 lg:p-12 flex justify-start items-center space-x-4 md:space-x-10 lg:space-x-20 text-xs md:text-lg lg:text-xl font-serif" 
         style={{position: 'absolute', top: 0, zIndex: 10, background: 'linear-gradient(to bottom, black, transparent)', userSelect: 'none' }}
         >
-            <Image src="/icons/logo.svg" alt="Logo" className="h-10 md:h-12 lg:h-14" width={180} height={120} />
+            <Image src="/icons/logo.svg" alt="Logo" className="h-10 md:h-12 lg:h-14 w-auto" width={120} height={120} />
             <Link href="/" className="truncate" title="Home">Home</Link>
             <Link href="/" className="truncate" title="Hotdogs">Hotdogs</Link>
             <Link href="/" className="truncate" title="Contact Us">Contact Us</Link>
